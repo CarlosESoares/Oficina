@@ -1,228 +1,367 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Carrinho</title>
 
   <style>
     /* ===================================================== */
-    /* AQUI COMEÇA O CSS - É AQUI QUE VOCÊS VÃO COLORIR!     */
+    /* CONFIGURAÇÃO DA PÁGINA                                */
     /* ===================================================== */
 
-    /* Fundo da página */
     body {
+      margin: 0;
       background-color: lightblue;
-    }
-
-    /* PISTA */
-    .pista {
-      width: 100%;
-      height: 250px;
-      position: relative;
       overflow: hidden;
-      margin-top: 50px;
     }
 
-    /* CENÁRIO DO CARRO */
-    .cenario {
-      width: 400px;
-      height: 250px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
+    /* ===================================================== */
+    /* BOTÃO PARA PRÓXIMA PÁGINA                            */
+    /* ===================================================== */
 
-    /* BOTÃO DA PRÓXIMA PÁGINA */
     .botao-proxima {
       position: fixed;
       top: 20px;
       right: 20px;
+
       padding: 12px 25px;
+
       background-color: blue;
       color: white;
+
       border: none;
       border-radius: 10px;
+
       font-size: 18px;
       font-weight: bold;
+
       cursor: pointer;
+      text-decoration: none;
+
       z-index: 10;
+
+      transition: 0.3s;
     }
 
-    /* Efeito quando passar o mouse */
     .botao-proxima:hover {
       background-color: darkblue;
+      transform: scale(1.05);
     }
 
-    /* PARTE DE BAIXO DO CARRO */
+    /* ===================================================== */
+    /* PISTA                                                  */
+    /* ===================================================== */
+
+    .pista {
+      width: 100%;
+      height: 250px;
+
+      position: relative;
+      overflow: hidden;
+
+      margin-top: 50px;
+    }
+
+    /* ===================================================== */
+    /* CENÁRIO DO CARRO                                       */
+    /* ===================================================== */
+
+    .cenario {
+      width: 400px;
+      height: 250px;
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      z-index: 1;
+    }
+
+    /* ===================================================== */
+    /* PARTE DE BAIXO DO CARRO                               */
+    /* ===================================================== */
+
     .corpo-baixo {
       width: 300px;
       height: 60px;
+
       background-color: red;
+
       position: absolute;
+
       bottom: 40px;
       left: 50px;
+
       border-radius: 10px;
     }
 
-    /* PARTE DE CIMA DO CARRO */
+    /* ===================================================== */
+    /* PARTE DE CIMA DO CARRO                                */
+    /* ===================================================== */
+
     .corpo-cima {
       width: 180px;
       height: 50px;
+
       background-color: darkred;
+
       position: absolute;
+
       bottom: 95px;
       left: 100px;
+
       border-radius: 10px 10px 0 0;
     }
 
-    /* JANELA DA FRENTE */
+    /* ===================================================== */
+    /* JANELA DA FRENTE                                     */
+    /* ===================================================== */
+
     .janela-frente {
       width: 55px;
       height: 35px;
+
       background-color: lightskyblue;
+
       position: absolute;
+
       bottom: 100px;
       left: 108px;
+
       border-radius: 5px;
     }
 
-    /* JANELA DE TRÁS */
+    /* ===================================================== */
+    /* JANELA DE TRÁS                                       */
+    /* ===================================================== */
+
     .janela-tras {
       width: 55px;
       height: 35px;
+
       background-color: lightskyblue;
+
       position: absolute;
+
       bottom: 100px;
       left: 208px;
+
       border-radius: 5px;
     }
 
-    /* COLUNA ENTRE AS JANELAS */
+    /* ===================================================== */
+    /* COLUNA ENTRE AS JANELAS                               */
+    /* ===================================================== */
+
     .coluna {
       width: 8px;
       height: 50px;
+
       background-color: darkred;
+
       position: absolute;
+
       bottom: 95px;
       left: 176px;
     }
 
-    /* FAROL */
+    /* ===================================================== */
+    /* FAROL                                                 */
+    /* ===================================================== */
+
     .farol {
       width: 18px;
       height: 18px;
+
       background-color: yellow;
+
       position: absolute;
+
       bottom: 55px;
       left: 335px;
+
       border-radius: 50%;
     }
 
-    /* LANTERNA */
+    /* ===================================================== */
+    /* LANTERNA                                              */
+    /* ===================================================== */
+
     .lanterna {
       width: 12px;
       height: 20px;
+
       background-color: orange;
+
       position: absolute;
+
       bottom: 55px;
       left: 45px;
+
       border-radius: 5px;
     }
 
-    /* PARA-CHOQUE */
+    /* ===================================================== */
+    /* PARA-CHOQUE                                           */
+    /* ===================================================== */
+
     .para-choque {
       width: 300px;
       height: 12px;
+
       background-color: gray;
+
       position: absolute;
+
       bottom: 40px;
       left: 50px;
+
       border-radius: 0 0 10px 10px;
     }
 
-    /* PORTA */
+    /* ===================================================== */
+    /* PORTA                                                  */
+    /* ===================================================== */
+
     .porta {
       width: 4px;
       height: 60px;
+
       background-color: darkred;
+
       position: absolute;
+
       bottom: 40px;
       left: 175px;
     }
 
-    /* ARO DA RODA ESQUERDA */
+    /* ===================================================== */
+    /* ARO DA RODA ESQUERDA                                 */
+    /* ===================================================== */
+
     .aro-esquerda {
       width: 20px;
       height: 20px;
+
       background-color: silver;
+
       position: absolute;
+
       bottom: 30px;
       left: 95px;
+
       border-radius: 50%;
+
+      z-index: 2;
     }
 
-    /* ARO DA RODA DIREITA */
+    /* ===================================================== */
+    /* ARO DA RODA DIREITA                                  */
+    /* ===================================================== */
+
     .aro-direita {
       width: 20px;
       height: 20px;
+
       background-color: silver;
+
       position: absolute;
+
       bottom: 30px;
       left: 285px;
+
       border-radius: 50%;
+
+      z-index: 2;
     }
 
-    /* RODA ESQUERDA */
+    /* ===================================================== */
+    /* RODA ESQUERDA                                        */
+    /* ===================================================== */
+
     .roda-esquerda {
       width: 50px;
       height: 50px;
+
       background-color: black;
+
       position: absolute;
+
       bottom: 15px;
       left: 80px;
+
       border-radius: 50%;
     }
 
-    /* RODA DIREITA */
+    /* ===================================================== */
+    /* RODA DIREITA                                         */
+    /* ===================================================== */
+
     .roda-direita {
       width: 50px;
       height: 50px;
+
       background-color: black;
+
       position: absolute;
+
       bottom: 15px;
       left: 270px;
+
       border-radius: 50%;
     }
 
-    /* ÁRVORE */
+    /* ===================================================== */
+    /* ÁRVORE                                                */
+    /* ===================================================== */
+
     .arvore {
       position: absolute;
+
       bottom: 15px;
+
       display: flex;
       flex-direction: column-reverse;
       align-items: center;
+
       z-index: 0;
     }
 
-    /* TRONCO */
+    /* ===================================================== */
+    /* TRONCO                                                */
+    /* ===================================================== */
+
     .tronco {
       width: 15px;
       height: 40px;
+
       background-color: saddlebrown;
+
       border-radius: 3px;
     }
 
-    /* COPA */
+    /* ===================================================== */
+    /* COPA                                                  */
+    /* ===================================================== */
+
     .copa {
       width: 60px;
       height: 60px;
+
       background-color: forestgreen;
+
       border-radius: 50%;
+
       margin-bottom: -10px;
     }
 
-    /* POSIÇÃO DAS ÁRVORES */
+    /* ===================================================== */
+    /* POSIÇÃO DAS ÁRVORES                                  */
+    /* ===================================================== */
+
     .arvore-1 {
       left: 8%;
     }
@@ -239,12 +378,18 @@
       left: 85%;
     }
 
-    /* CHÃO */
+    /* ===================================================== */
+    /* CHÃO                                                   */
+    /* ===================================================== */
+
     .chao {
       width: 100%;
       height: 5px;
+
       background-color: green;
+
       position: absolute;
+
       bottom: 10px;
     }
 
@@ -254,18 +399,16 @@
 <body>
 
   <!-- ===================================================== -->
-  <!-- BOTÃO PARA IR PARA A PÁGINA Slide.html                 -->
+  <!-- BOTÃO PARA IR PARA Slide.html                         -->
   <!-- ===================================================== -->
 
-  <button
-    class="botao-proxima"
-    onclick="window.location.href='Slide.html'">
+  <a href="Slide.html" class="botao-proxima">
     Próxima página
-  </button>
+  </a>
 
 
   <!-- ===================================================== -->
-  <!-- PISTA                                                     -->
+  <!-- PISTA                                                  -->
   <!-- ===================================================== -->
 
   <div class="pista">
@@ -296,7 +439,7 @@
 
 
     <!-- ===================================================== -->
-    <!-- CENÁRIO DO CARRO                                      -->
+    <!-- CENÁRIO DO CARRO                                     -->
     <!-- ===================================================== -->
 
     <div class="cenario">
@@ -343,7 +486,10 @@
     </div>
 
 
-    <!-- CHÃO -->
+    <!-- ===================================================== -->
+    <!-- CHÃO                                                   -->
+    <!-- ===================================================== -->
+
     <div class="chao"></div>
 
   </div>
@@ -355,16 +501,16 @@
 
   <script>
 
-    // Pega o carro pelo nome da classe
+    // Pega o carro pela classe
     const carro = document.querySelector(".cenario");
 
-    // Posição inicial do carro
+    // Posição inicial
     let posicao = 0;
 
     // Função que movimenta o carro
     function moverCarro() {
 
-      // Aumenta a posição do carro
+      // Aumenta a posição
       posicao = posicao + 3;
 
       // Se o carro sair da tela pela direita
@@ -381,7 +527,7 @@
       requestAnimationFrame(moverCarro);
     }
 
-    // Inicia o movimento do carro
+    // Inicia o movimento
     moverCarro();
 
   </script>

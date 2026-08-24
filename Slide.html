@@ -4,9 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CTI Info × CTI Qui — Matérias</title>
 
 <style>
+
   * {
     box-sizing: border-box;
   }
@@ -18,27 +20,17 @@
     color: #f5f7fb;
   }
 
-  .slide {
-    width: 100vw;
-    min-height: 100vh;
-    padding: 48px 58px;
-
-    background:
-      radial-gradient(circle at 12% 15%, rgba(66,153,225,.22), transparent 28%),
-      radial-gradient(circle at 88% 18%, rgba(72,187,120,.18), transparent 28%),
-      linear-gradient(135deg,#0b1020 0%,#11182c 55%,#0c1423 100%);
-  }
-
   /* ===================================================== */
-  /* BOTÃO PARA VOLTAR PARA O INDEX.HTML                   */
+  /* BOTÃO VOLTAR                                          */
   /* ===================================================== */
 
   .botao-voltar {
     position: fixed;
+
     top: 20px;
     right: 20px;
 
-    padding: 12px 20px;
+    padding: 12px 22px;
 
     background-color: #4da3ff;
     color: white;
@@ -51,8 +43,11 @@
 
     cursor: pointer;
 
+    text-decoration: none;
+
     z-index: 100;
-    box-shadow: 0 5px 15px rgba(0,0,0,.3);
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 
     transition: 0.3s;
   }
@@ -62,57 +57,125 @@
     transform: scale(1.05);
   }
 
+  /* ===================================================== */
+  /* SLIDE                                                  */
+  /* ===================================================== */
+
+  .slide {
+    width: 100vw;
+    min-height: 100vh;
+
+    padding: 48px 58px;
+
+    background:
+      radial-gradient(
+        circle at 12% 15%,
+        rgba(66,153,225,.22),
+        transparent 28%
+      ),
+
+      radial-gradient(
+        circle at 88% 18%,
+        rgba(72,187,120,.18),
+        transparent 28%
+      ),
+
+      linear-gradient(
+        135deg,
+        #0b1020 0%,
+        #11182c 55%,
+        #0c1423 100%
+      );
+  }
+
+  /* ===================================================== */
+  /* TOPO                                                    */
+  /* ===================================================== */
+
   .top {
     display: flex;
+
     justify-content: space-between;
     align-items: flex-start;
+
     gap: 30px;
   }
 
   .eyebrow {
     font-size: 15px;
+
     letter-spacing: 2.5px;
+
     text-transform: uppercase;
+
     color: #9aa9c4;
+
     font-weight: 700;
   }
 
   h1 {
     font-size: 46px;
+
     line-height: 1.02;
+
     margin: 8px 0 12px;
+
     letter-spacing: -1.5px;
   }
 
   .sub {
     color: #b7c2d6;
+
     font-size: 18px;
+
     max-width: 760px;
+
     line-height: 1.45;
   }
 
   .badge {
     padding: 10px 14px;
+
     border: 1px solid #31405f;
+
     border-radius: 999px;
+
     color: #dbe5f5;
+
     background: #141d33;
+
     font-size: 14px;
+
     white-space: nowrap;
   }
 
+  /* ===================================================== */
+  /* GRID                                                     */
+  /* ===================================================== */
+
   .grid {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 24px;
+
     margin-top: 34px;
   }
 
+  /* ===================================================== */
+  /* CARDS                                                    */
+  /* ===================================================== */
+
   .card {
     border: 1px solid #263553;
+
     border-radius: 22px;
+
     padding: 26px;
+
     background: rgba(16,24,43,.82);
+
     box-shadow: 0 14px 35px rgba(0,0,0,.18);
   }
 
@@ -124,106 +187,171 @@
     border-top: 4px solid #48c78e;
   }
 
+  /* ===================================================== */
+  /* TÍTULO DOS CARDS                                        */
+  /* ===================================================== */
+
   .title {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     margin-bottom: 18px;
   }
 
   .title h2 {
     margin: 0;
+
     font-size: 28px;
   }
 
   .pill {
     font-size: 12px;
+
     font-weight: 700;
+
     padding: 7px 10px;
+
     border-radius: 10px;
+
     background: #18243b;
+
     color: #c9d8ee;
   }
 
+  /* ===================================================== */
+  /* DESCRIÇÃO                                               */
+  /* ===================================================== */
+
   .desc {
     color: #aebbd0;
+
     font-size: 15px;
+
     line-height: 1.45;
+
     margin-bottom: 20px;
   }
 
+  /* ===================================================== */
+  /* SEMESTRES                                               */
+  /* ===================================================== */
+
   .semesters {
     display: grid;
+
     grid-template-columns: repeat(3,1fr);
+
     gap: 12px;
   }
 
   .sem {
     background: #121c30;
+
     border: 1px solid #263553;
+
     border-radius: 15px;
+
     padding: 14px;
   }
 
   .sem strong {
     display: block;
+
     font-size: 15px;
+
     margin-bottom: 8px;
   }
 
   .sem span {
     display: block;
+
     color: #aebbd0;
+
     font-size: 12.5px;
+
     line-height: 1.5;
   }
 
+  /* ===================================================== */
+  /* DESTAQUE                                                */
+  /* ===================================================== */
+
   .highlight {
     margin-top: 18px;
+
     padding: 15px 16px;
+
     border-radius: 15px;
+
     background: #101a2c;
+
     border: 1px solid #263553;
   }
 
   .highlight b {
     display: block;
+
     font-size: 13px;
+
     margin-bottom: 6px;
   }
 
   .highlight p {
     margin: 0;
+
     color: #b8c4d8;
+
     font-size: 13px;
+
     line-height: 1.45;
   }
 
+  /* ===================================================== */
+  /* RODAPÉ                                                  */
+  /* ===================================================== */
+
   .footer {
     margin-top: 25px;
+
     display: grid;
+
     grid-template-columns: 1fr 1fr 1fr;
+
     gap: 14px;
   }
 
   .fact {
     padding: 15px 17px;
+
     background: rgba(18,28,48,.7);
+
     border: 1px solid #263553;
+
     border-radius: 15px;
   }
 
   .fact b {
     display: block;
+
     font-size: 13px;
+
     margin-bottom: 5px;
   }
 
   .fact span {
     color: #aebbd0;
+
     font-size: 12.5px;
+
     line-height: 1.4;
   }
+
+  /* ===================================================== */
+  /* RESPONSIVIDADE                                         */
+  /* ===================================================== */
 
   @media(max-width:900px) {
 
@@ -254,7 +382,12 @@
     .badge {
       margin-top: 10px;
     }
+
   }
+
+  /* ===================================================== */
+  /* IMPRESSÃO                                               */
+  /* ===================================================== */
 
   @media print {
 
@@ -264,14 +397,18 @@
 
     .slide {
       width: 13.333in;
+
       min-height: 7.5in;
+
       padding: .45in;
+
       color: #f5f7fb;
     }
 
     .botao-voltar {
       display: none;
     }
+
   }
 
 </style>
@@ -280,17 +417,23 @@
 <body>
 
 <!-- ===================================================== -->
-<!-- BOTÃO PARA VOLTAR PARA A PÁGINA index.html             -->
+<!-- BOTÃO PARA VOLTAR AO INDEX.HTML                        -->
 <!-- ===================================================== -->
 
-<button
-  class="botao-voltar"
-  onclick="window.location.href='index.html'">
+<a href="index.html" class="botao-voltar">
   ← Voltar para o início
-</button>
+</a>
 
+
+<!-- ===================================================== -->
+<!-- CONTEÚDO PRINCIPAL                                    -->
+<!-- ===================================================== -->
 
 <section class="slide">
+
+  <!-- =================================================== -->
+  <!-- CABEÇALHO                                           -->
+  <!-- =================================================== -->
 
   <div class="top">
 
@@ -307,7 +450,8 @@
       <div class="sub">
         Duas formações técnicas com trajetórias bem diferentes:
         uma voltada à computação e ao desenvolvimento de sistemas;
-        outra centrada nas ciências químicas, laboratório e processos industriais.
+        outra centrada nas ciências químicas, laboratório e
+        processos industriais.
       </div>
 
     </div>
@@ -319,11 +463,15 @@
   </div>
 
 
+  <!-- =================================================== -->
+  <!-- CARDS                                                -->
+  <!-- =================================================== -->
+
   <div class="grid">
 
-    <!-- ================================================= -->
-    <!-- CTI INFORMÁTICA                                   -->
-    <!-- ================================================= -->
+    <!-- =============================================== -->
+    <!-- CTI INFORMÁTICA                                 -->
+    <!-- =============================================== -->
 
     <article class="card info">
 
@@ -344,60 +492,97 @@
         banco de dados, sistemas e desenvolvimento de aplicações.
       </div>
 
+
       <div class="semesters">
 
         <div class="sem">
-          <strong>I1</strong>
+
+          <strong>
+            I1
+          </strong>
+
           <span>
             Lógica para Programação<br>
             Informática Básica
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>I2</strong>
+
+          <strong>
+            I2
+          </strong>
+
           <span>
             Programação<br>
             Fundamentos técnicos
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>I3</strong>
+
+          <strong>
+            I3
+          </strong>
+
           <span>
             Programação<br>
             Aprofundamento
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>I4</strong>
+
+          <strong>
+            I4
+          </strong>
+
           <span>
             Programação<br>
             Aprofundamento
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>I5</strong>
+
+          <strong>
+            I5
+          </strong>
+
           <span>
             Banco de Dados<br>
             Sistemas Operacionais<br>
             Design Gráfico<br>
             Jogos • Projeto Integrador
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>I6</strong>
+
+          <strong>
+            I6
+          </strong>
+
           <span>
             Web • Mobile • Jogos<br>
             Empreendedorismo<br>
             Projeto Integrador
           </span>
+
         </div>
 
       </div>
+
 
       <div class="highlight">
 
@@ -416,9 +601,9 @@
     </article>
 
 
-    <!-- ================================================= -->
-    <!-- CTI QUÍMICA                                       -->
-    <!-- ================================================= -->
+    <!-- =============================================== -->
+    <!-- CTI QUÍMICA                                      -->
+    <!-- =============================================== -->
 
     <article class="card qui">
 
@@ -434,69 +619,107 @@
 
       </div>
 
+
       <div class="desc">
         Constrói uma base forte em matemática e ciências naturais
         e avança para química analítica, processos,
         instrumentação e laboratório.
       </div>
 
+
       <div class="semesters">
 
         <div class="sem">
-          <strong>Q1</strong>
+
+          <strong>
+            Q1
+          </strong>
+
           <span>
             Química Geral I<br>
             Biologia • Matemática<br>
             Informática Básica
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>Q2</strong>
+
+          <strong>
+            Q2
+          </strong>
+
           <span>
             Química Geral II<br>
             Química Inorgânica I<br>
             Física I
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>Q3</strong>
+
+          <strong>
+            Q3
+          </strong>
+
           <span>
             Química Inorgânica II<br>
             Físico-Química I<br>
             Metodologia
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>Q4</strong>
+
+          <strong>
+            Q4
+          </strong>
+
           <span>
             Química Orgânica I<br>
             Química Ambiental<br>
             Físico-Química II
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>Q5</strong>
+
+          <strong>
+            Q5
+          </strong>
+
           <span>
             Bioquímica<br>
             Química Analítica Qualitativa<br>
             Processos Industriais I
           </span>
+
         </div>
 
+
         <div class="sem">
-          <strong>Q6</strong>
+
+          <strong>
+            Q6
+          </strong>
+
           <span>
             Análise Instrumental<br>
             Processos Industriais II<br>
             Microbiologia • Química Experimental
           </span>
+
         </div>
 
       </div>
+
 
       <div class="highlight">
 
@@ -517,9 +740,9 @@
   </div>
 
 
-  <!-- ================================================= -->
-  <!-- RODAPÉ                                            -->
-  <!-- ================================================= -->
+  <!-- =================================================== -->
+  <!-- RODAPÉ                                              -->
+  <!-- =================================================== -->
 
   <div class="footer">
 
@@ -535,6 +758,7 @@
 
     </div>
 
+
     <div class="fact">
 
       <b>
@@ -546,6 +770,7 @@
       </span>
 
     </div>
+
 
     <div class="fact">
 
