@@ -6,346 +6,382 @@
 
   <style>
     /* ===================================================== */
-    /* AQUI COMEÇA O CSS - É AQUI QUE VOCÊS VÃO COLORIR!      */
-    /* Basta trocar as palavras de cor (ex: "red", "blue")    */
+    /* AQUI COMEÇA O CSS - É AQUI QUE VOCÊS VÃO COLORIR!     */
     /* ===================================================== */
 
-    /* Deixa o fundo da página com uma cor de céu */
+    /* Fundo da página */
     body {
-      background-color:lightblue;/* cor do fundo da página */
+      background-color: lightblue;
     }
 
-    /* Essa é a PISTA: uma faixa comprida que corta a tela inteira,   */
-    /* por onde o carro vai correr de um lado para o outro            */
+    /* PISTA */
     .pista {
-      width: 100%;           /* ocupa toda a largura da tela */
-      height: 250px;          /* altura da pista */
-      position: relative;     /* serve de "chão" para o carro se mover */
-      overflow: hidden;       /* esconde o carro quando ele sai da tela */
-      margin-top: 50px;       /* distância do topo da página */
+      width: 100%;
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 50px;
     }
 
-    /* Essa é a "caixa" onde o carrinho vai ficar dentro          */
-    /* É ELA que o JavaScript vai mover para a direita sem parar  */
+    /* CENÁRIO DO CARRO */
     .cenario {
-      width: 400px;         /* largura da caixa */
-      height: 250px;        /* altura da caixa */
-      position: absolute;   /* permite mover a caixa livremente com o JS */
-      top: 0;                /* começa colada no topo da pista */
-      left: 0;               /* posição inicial (o JS vai mudar isso) */
-      z-index: 1;             /* fica NA FRENTE das árvores (número maior = mais pra frente) */
+      width: 400px;
+      height: 250px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
 
-    /* Essa é a PARTE DE BAIXO do carro (a base, o corpo maior) */
+    /* BOTÃO DA PRÓXIMA PÁGINA */
+    .botao-proxima {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 25px;
+      background-color: blue;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    /* Efeito quando passar o mouse */
+    .botao-proxima:hover {
+      background-color: darkblue;
+    }
+
+    /* PARTE DE BAIXO DO CARRO */
     .corpo-baixo {
-      width: 300px;               /* largura do corpo */
-      height: 60px;                /* altura do corpo */
-      background-color: red;       /* <-- COR DO CORPO DE BAIXO */
-      position: absolute;          /* posição dentro do cenário */
-      bottom: 40px;                /* distância do chão */
-      left: 50px;                  /* distância da esquerda */
-      border-radius: 10px;         /* deixa as bordas arredondadas */
+      width: 300px;
+      height: 60px;
+      background-color: red;
+      position: absolute;
+      bottom: 40px;
+      left: 50px;
+      border-radius: 10px;
     }
 
-    /* Essa é a PARTE DE CIMA do carro (a cabine, onde ficam as janelas) */
+    /* PARTE DE CIMA DO CARRO */
     .corpo-cima {
-      width: 180px;                /* largura da cabine */
-      height: 50px;                 /* altura da cabine */
-      background-color: darkred;    /* <-- COR DA CABINE */
-      position: absolute;           /* posição dentro do cenário */
-      bottom: 95px;                 /* fica em cima do corpo de baixo */
-      left: 100px;                  /* centralizada em cima do corpo */
-      border-radius: 10px 10px 0 0; /* arredonda só as bordas de cima */
+      width: 180px;
+      height: 50px;
+      background-color: darkred;
+      position: absolute;
+      bottom: 95px;
+      left: 100px;
+      border-radius: 10px 10px 0 0;
     }
 
-    /* Essa é a JANELA da frente do carro (lado do motorista) */
+    /* JANELA DA FRENTE */
     .janela-frente {
-      width: 55px;                  /* largura da janela */
-      height: 35px;                  /* altura da janela */
-      background-color: lightskyblue; /* <-- COR DA JANELA DA FRENTE */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 100px;                 /* altura da janela no carro */
-      left: 108px;                   /* posição da janela */
-      border-radius: 5px;            /* cantos arredondados */
+      width: 55px;
+      height: 35px;
+      background-color: lightskyblue;
+      position: absolute;
+      bottom: 100px;
+      left: 108px;
+      border-radius: 5px;
     }
 
-    /* Essa é a JANELA de trás do carro */
+    /* JANELA DE TRÁS */
     .janela-tras {
-      width: 55px;                  /* largura da janela */
-      height: 35px;                  /* altura da janela */
-      background-color: lightskyblue; /* <-- COR DA JANELA DE TRÁS */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 100px;                 /* altura da janela no carro */
-      left: 208px;                   /* posição da janela */
-      border-radius: 5px;            /* cantos arredondados */
+      width: 55px;
+      height: 35px;
+      background-color: lightskyblue;
+      position: absolute;
+      bottom: 100px;
+      left: 208px;
+      border-radius: 5px;
     }
 
-    /* Essa é a COLUNA entre as duas janelas (como um carro de verdade) */
+    /* COLUNA ENTRE AS JANELAS */
     .coluna {
-      width: 8px;                   /* largura bem fininha */
-      height: 50px;                  /* altura da coluna */
-      background-color: darkred;     /* <-- COR DA COLUNA (mesma da cabine) */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 95px;                  /* mesma altura da cabine */
-      left: 176px;                   /* fica bem no meio das duas janelas */
+      width: 8px;
+      height: 50px;
+      background-color: darkred;
+      position: absolute;
+      bottom: 95px;
+      left: 176px;
     }
 
-    /* Esse é o FAROL da frente do carro (fica aceso!) */
+    /* FAROL */
     .farol {
-      width: 18px;                  /* largura do farol */
-      height: 18px;                  /* altura do farol */
-      background-color: yellow;      /* <-- COR DO FAROL */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 55px;                  /* altura do farol no carro */
-      left: 335px;                   /* bem na frente do carro */
-      border-radius: 50%;            /* deixa a forma REDONDA */
+      width: 18px;
+      height: 18px;
+      background-color: yellow;
+      position: absolute;
+      bottom: 55px;
+      left: 335px;
+      border-radius: 50%;
     }
 
-    /* Essa é a LANTERNA de trás do carro */
+    /* LANTERNA */
     .lanterna {
-      width: 12px;                  /* largura da lanterna */
-      height: 20px;                  /* altura da lanterna */
-      background-color: orange;      /* <-- COR DA LANTERNA */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 55px;                  /* altura da lanterna no carro */
-      left: 45px;                    /* bem atrás do carro */
-      border-radius: 5px;            /* cantos arredondados */
+      width: 12px;
+      height: 20px;
+      background-color: orange;
+      position: absolute;
+      bottom: 55px;
+      left: 45px;
+      border-radius: 5px;
     }
 
-    /* Esse é o PARA-CHOQUE da frente (uma faixa mais escura embaixo) */
+    /* PARA-CHOQUE */
     .para-choque {
-      width: 300px;                 /* mesma largura do corpo de baixo */
-      height: 12px;                  /* altura do para-choque */
-      background-color: gray;        /* <-- COR DO PARA-CHOQUE */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 40px;                  /* fica na base do corpo */
-      left: 50px;                    /* alinhado com o corpo de baixo */
-      border-radius: 0 0 10px 10px;  /* arredonda só as bordas de baixo */
+      width: 300px;
+      height: 12px;
+      background-color: gray;
+      position: absolute;
+      bottom: 40px;
+      left: 50px;
+      border-radius: 0 0 10px 10px;
     }
 
-    /* Essa é a PORTA (uma linha vertical marcando a porta do carro) */
+    /* PORTA */
     .porta {
-      width: 4px;                   /* largura bem fininha, como uma linha */
-      height: 60px;                  /* mesma altura do corpo de baixo */
-      background-color: darkred;     /* <-- COR DA LINHA DA PORTA */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 40px;                  /* mesma altura do corpo de baixo */
-      left: 175px;                   /* posição da porta no corpo */
+      width: 4px;
+      height: 60px;
+      background-color: darkred;
+      position: absolute;
+      bottom: 40px;
+      left: 175px;
     }
 
-    /* Esse é o ARO (miolo) da roda ESQUERDA */
+    /* ARO DA RODA ESQUERDA */
     .aro-esquerda {
-      width: 20px;                  /* largura do aro, menor que a roda */
-      height: 20px;                  /* altura do aro */
-      background-color: silver;      /* <-- COR DO ARO */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 30px;                  /* centraliza dentro da roda */
-      left: 95px;                    /* centraliza dentro da roda esquerda */
-      border-radius: 50%;            /* deixa a forma REDONDA */
+      width: 20px;
+      height: 20px;
+      background-color: silver;
+      position: absolute;
+      bottom: 30px;
+      left: 95px;
+      border-radius: 50%;
     }
 
-    /* Esse é o ARO (miolo) da roda DIREITA */
+    /* ARO DA RODA DIREITA */
     .aro-direita {
-      width: 20px;                  /* largura do aro, menor que a roda */
-      height: 20px;                  /* altura do aro */
-      background-color: silver;      /* <-- COR DO ARO */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 30px;                  /* centraliza dentro da roda */
-      left: 285px;                   /* centraliza dentro da roda direita */
-      border-radius: 50%;            /* deixa a forma REDONDA */
+      width: 20px;
+      height: 20px;
+      background-color: silver;
+      position: absolute;
+      bottom: 30px;
+      left: 285px;
+      border-radius: 50%;
     }
 
-    /* Essa é a roda da ESQUERDA */
+    /* RODA ESQUERDA */
     .roda-esquerda {
-      width: 50px;                  /* largura da roda */
-      height: 50px;                  /* altura da roda (redonda = largura igual altura) */
-      background-color: black;       /* <-- COR DA RODA */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 15px;                  /* distância do chão */
-      left: 80px;                    /* posição da roda no carro */
-      border-radius: 50%;            /* deixa a forma REDONDA */
+      width: 50px;
+      height: 50px;
+      background-color: black;
+      position: absolute;
+      bottom: 15px;
+      left: 80px;
+      border-radius: 50%;
     }
 
-    /* Essa é a roda da DIREITA (igual a de cima, só muda a posição) */
+    /* RODA DIREITA */
     .roda-direita {
-      width: 50px;                  /* largura da roda */
-      height: 50px;                  /* altura da roda */
-      background-color: black;       /* <-- COR DA RODA */
-      position: absolute;            /* posição dentro do cenário */
-      bottom: 15px;                  /* distância do chão */
-      left: 270px;                   /* posição da roda no carro */
-      border-radius: 50%;            /* deixa a forma REDONDA */
+      width: 50px;
+      height: 50px;
+      background-color: black;
+      position: absolute;
+      bottom: 15px;
+      left: 270px;
+      border-radius: 50%;
     }
 
-    /* Essa é a ÁRVORE: a "caixa" que junta o tronco e a copa juntos */
-    /* Ela fica direto na PISTA (assim como o chão), por isso não se */
-    /* move quando o carro anda                                      */
+    /* ÁRVORE */
     .arvore {
-      position: absolute;         /* posição fixa dentro da pista */
-      bottom: 15px;                /* distância do chão (a árvore "nasce" do chão) */
-      display: flex;               /* organiza o tronco e a copa um em cima do outro */
-      flex-direction: column-reverse; /* o tronco fica embaixo, a copa em cima */
-      align-items: center;         /* centraliza a copa em cima do tronco */
-      z-index: 0;                  /* fica ATRÁS do carro (número menor = mais pra trás) */
+      position: absolute;
+      bottom: 15px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      z-index: 0;
     }
 
-    /* Esse é o TRONCO da árvore (a parte de baixo, de madeira) */
+    /* TRONCO */
     .tronco {
-      width: 15px;                /* largura do tronco */
-      height: 40px;                 /* altura do tronco */
-      background-color: saddlebrown; /* <-- COR DO TRONCO */
-      border-radius: 3px;           /* cantos levemente arredondados */
+      width: 15px;
+      height: 40px;
+      background-color: saddlebrown;
+      border-radius: 3px;
     }
 
-    /* Essa é a COPA da árvore (a parte verde, de folhas) */
+    /* COPA */
     .copa {
-      width: 60px;                 /* largura da copa */
-      height: 60px;                 /* altura da copa */
-      background-color: forestgreen; /* <-- COR DA COPA (folhas) */
-      border-radius: 50%;           /* deixa a forma REDONDA */
-      margin-bottom: -10px;         /* puxa a copa um pouco pra baixo, encaixando no tronco */
+      width: 60px;
+      height: 60px;
+      background-color: forestgreen;
+      border-radius: 50%;
+      margin-bottom: -10px;
     }
 
-    /* Cada árvore tem uma posição diferente na pista (esquerda pra direita) */
-    .arvore-1 { left: 8%; }   /* posição da 1ª árvore */
-    .arvore-2 { left: 32%; }  /* posição da 2ª árvore */
-    .arvore-3 { left: 62%; }  /* posição da 3ª árvore */
-    .arvore-4 { left: 85%; }  /* posição da 4ª árvore */
-    /* Ela está posicionada direto na PISTA (não dentro do carro), */
-    /* por isso fica PARADA e se estende pela tela inteira,        */
-    /* enquanto o carro corre por cima dela                        */
+    /* POSIÇÃO DAS ÁRVORES */
+    .arvore-1 {
+      left: 8%;
+    }
+
+    .arvore-2 {
+      left: 32%;
+    }
+
+    .arvore-3 {
+      left: 62%;
+    }
+
+    .arvore-4 {
+      left: 85%;
+    }
+
+    /* CHÃO */
     .chao {
-      width: 100%;                  /* ocupa toda a largura da pista */
-      height: 5px;                   /* altura da linha */
-      background-color: green;       /* <-- COR DO CHÃO */
-      position: absolute;            /* posição dentro da pista */
-      bottom: 10px;                  /* distância do fundo da pista */
+      width: 100%;
+      height: 5px;
+      background-color: green;
+      position: absolute;
+      bottom: 10px;
     }
 
   </style>
 </head>
+
 <body>
 
   <!-- ===================================================== -->
-  <!-- AQUI COMEÇA O HTML - É AQUI QUE MONTAMOS AS PEÇAS      -->
-  <!-- Cada <div> é uma peça do carrinho                      -->
+  <!-- BOTÃO PARA IR PARA A PÁGINA Slide.html                 -->
   <!-- ===================================================== -->
 
-  <!-- Essa div é a PISTA: a faixa comprida onde o carro vai correr -->
+  <button
+    class="botao-proxima"
+    onclick="window.location.href='Slide.html'">
+    Próxima página
+  </button>
+
+
+  <!-- ===================================================== -->
+  <!-- PISTA                                                     -->
+  <!-- ===================================================== -->
+
   <div class="pista">
 
-  <!-- As árvores ficam DIRETO NA PISTA, igual ao chão,        -->
-  <!-- por isso elas NÃO se movem. Colocamos elas ANTES do     -->
-  <!-- carro no código para ficarem na camada de trás           -->
-  <div class="arvore arvore-1">
-    <div class="tronco"></div>
-    <div class="copa"></div>
+    <!-- ÁRVORE 1 -->
+    <div class="arvore arvore-1">
+      <div class="tronco"></div>
+      <div class="copa"></div>
+    </div>
+
+    <!-- ÁRVORE 2 -->
+    <div class="arvore arvore-2">
+      <div class="tronco"></div>
+      <div class="copa"></div>
+    </div>
+
+    <!-- ÁRVORE 3 -->
+    <div class="arvore arvore-3">
+      <div class="tronco"></div>
+      <div class="copa"></div>
+    </div>
+
+    <!-- ÁRVORE 4 -->
+    <div class="arvore arvore-4">
+      <div class="tronco"></div>
+      <div class="copa"></div>
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- CENÁRIO DO CARRO                                      -->
+    <!-- ===================================================== -->
+
+    <div class="cenario">
+
+      <!-- Parte de baixo do carro -->
+      <div class="corpo-baixo"></div>
+
+      <!-- Parte de cima do carro -->
+      <div class="corpo-cima"></div>
+
+      <!-- Janela da frente -->
+      <div class="janela-frente"></div>
+
+      <!-- Janela de trás -->
+      <div class="janela-tras"></div>
+
+      <!-- Coluna entre as janelas -->
+      <div class="coluna"></div>
+
+      <!-- Farol -->
+      <div class="farol"></div>
+
+      <!-- Lanterna -->
+      <div class="lanterna"></div>
+
+      <!-- Para-choque -->
+      <div class="para-choque"></div>
+
+      <!-- Porta -->
+      <div class="porta"></div>
+
+      <!-- Roda esquerda -->
+      <div class="roda-esquerda"></div>
+
+      <!-- Aro da roda esquerda -->
+      <div class="aro-esquerda"></div>
+
+      <!-- Roda direita -->
+      <div class="roda-direita"></div>
+
+      <!-- Aro da roda direita -->
+      <div class="aro-direita"></div>
+
+    </div>
+
+
+    <!-- CHÃO -->
+    <div class="chao"></div>
+
   </div>
 
-  <div class="arvore arvore-2">
-    <div class="tronco"></div>
-    <div class="copa"></div>
-  </div>
-
-  <div class="arvore arvore-3">
-    <div class="tronco"></div>
-    <div class="copa"></div>
-  </div>
-
-  <div class="arvore arvore-4">
-    <div class="tronco"></div>
-    <div class="copa"></div>
-  </div>
-
-  <!-- Essa div é o cenário: a "moldura" onde tudo fica dentro -->
-  <div class="cenario">
-
-    <!-- Peça 1: parte de baixo do carro -->
-    <div class="corpo-baixo"></div>
-
-    <!-- Peça 2: parte de cima do carro (cabine) -->
-    <div class="corpo-cima"></div>
-
-    <!-- Peça 3: janela da frente -->
-    <div class="janela-frente"></div>
-
-    <!-- Peça 4: janela de trás -->
-    <div class="janela-tras"></div>
-
-    <!-- Peça 5: coluna entre as janelas -->
-    <div class="coluna"></div>
-
-    <!-- Peça 6: farol da frente -->
-    <div class="farol"></div>
-
-    <!-- Peça 7: lanterna de trás -->
-    <div class="lanterna"></div>
-
-    <!-- Peça 8: para-choque -->
-    <div class="para-choque"></div>
-
-    <!-- Peça 9: linha da porta -->
-    <div class="porta"></div>
-
-    <!-- Peça 10: roda da esquerda -->
-    <div class="roda-esquerda"></div>
-
-    <!-- Peça 11: aro da roda esquerda -->
-    <div class="aro-esquerda"></div>
-
-    <!-- Peça 12: roda da direita -->
-    <div class="roda-direita"></div>
-
-    <!-- Peça 13: aro da roda direita -->
-    <div class="aro-direita"></div>
-
-  </div>
-
-  <!-- Essa div fica FORA do carro, direto na pista,       -->
-  <!-- por isso ela NÃO se move junto com o carro           -->
-  <div class="chao"></div>
-
-  </div> <!-- fim da pista -->
 
   <!-- ===================================================== -->
-  <!-- AQUI COMEÇA O JAVASCRIPT - É AQUI QUE FAZEMOS O CARRO  -->
-  <!-- SE MOVER SOZINHO NA TELA!                              -->
+  <!-- JAVASCRIPT - MOVIMENTO DO CARRO                       -->
   <!-- ===================================================== -->
+
   <script>
 
-    // Primeiro, vamos "pegar" a peça do carro no HTML
-    // usando o nome da classe (cenario), pra poder mexer nela
+    // Pega o carro pelo nome da classe
     const carro = document.querySelector(".cenario");
 
-    // Essa variável guarda a posição do carro na tela
-    // Ela começa em 0, ou seja, bem na esquerda
+    // Posição inicial do carro
     let posicao = 0;
 
-    // Essa função é o "coração" da animação
-    // Ela vai ser chamada várias vezes por segundo
+    // Função que movimenta o carro
     function moverCarro() {
 
-      // A cada chamada, aumentamos a posição em 3 pixels
-      // (quanto maior o número, mais rápido o carro anda)
+      // Aumenta a posição do carro
       posicao = posicao + 3;
 
-      // Se o carro sair da tela pela direita...
+      // Se o carro sair da tela pela direita
       if (posicao > window.innerWidth) {
-        // ...ele volta para o começo (bem à esquerda, fora da tela)
+
+        // Volta para a esquerda
         posicao = -400;
       }
 
-      // Aqui a gente realmente move o carro na tela,
-      // usando a posição que calculamos acima
+      // Move o carro
       carro.style.left = posicao + "px";
 
-      // Isso pede pro navegador chamar essa função de novo
-      // no próximo "quadro" da animação (como um desenho animado)
+      // Continua a animação
       requestAnimationFrame(moverCarro);
     }
 
-    // Aqui a gente chama a função pela primeira vez,
-    // pra animação começar assim que a página abrir
+    // Inicia o movimento do carro
     moverCarro();
 
   </script>
