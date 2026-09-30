@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  CIDADE DO BONECO PALITO
+  Oficina de programação - 9º ano
+  ============================================================
+  Este arquivo tem 3 partes, todas no mesmo lugar:
+
+    1) HTML        -> os "objetos" da cena (céu, casas, estrada, boneco)
+    2) CSS         -> a aparência de cada objeto (cor, tamanho, posição, animação)
+    3) JAVASCRIPT  -> o movimento do boneco pela tela
+
+  Para testar: salve como "cidade.html" e abra no navegador.
+  Depois de mudar alguma coisa no código, salve e aperte F5.
+-->
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- Faz a página se ajustar bem em telas de tamanhos diferentes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Este é o texto que aparece na aba do navegador -->
+  <title>Cidade do Boneco Palito</title>
+
+  <!-- ==========================================================
+       PARTE 2: CSS (a aparência das coisas)
+       Cada bloco abaixo começa com um "seletor" (ex.: .casa) que
+       escolhe QUAIS elementos do HTML vão receber aquele estilo.
+       O ponto (.) significa "classe".
+       ========================================================== -->
+  <style>
+
+    /* ---------- CONFIGURAÇÕES GERAIS ---------- */
+
+    /* O asterisco (*) escolhe TODOS os elementos.
+       "border-box" faz a borda contar dentro do tamanho do elemento,
+       assim as contas de largura e altura ficam mais fáceis. */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Tira as margens da página e esconde barras de rolagem,
+       para a cena ocupar a tela inteira. */
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* O "cenario" é a caixa grande que guarda TUDO.
+       position: relative -> os itens de dentro usam "absolute" e se
+       posicionam dentro desta caixa.
+       100vh = 100% da altura da tela. */
+    .cenario {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Título da página: uma plaquinha no canto de cima */
+    .titulo {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      margin: 0;
+      padding: 8px 18px;
+      font: 700 26px/1.2 "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive, sans-serif;
+      background: white;
+      border: 4px solid black;
+      border-radius: 14px;
+      transform: rotate(-2deg);          /* deixa a plaquinha um pouco torta */
+      box-shadow: 5px 5px 0 black;       /* sombra preta "de desenho" */
+      z-index: 10;                       /* fica na frente de tudo */
+    }
+
+
+    /* ---------- O CÉU ---------- */
+
+    /* O céu cobre a cena inteira, ao fundo.
+       linear-gradient faz uma cor que muda aos poucos:
+       azul forte em cima -> azul claro -> amarelinho perto do chão. */
+    .ceu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #1180d5 0%, #000000 65%, #fff6d6 100%);
+    }
+
+    /* O sol: um círculo amarelo.
+       border-radius: 50% transforma um quadrado em círculo.
+       box-shadow cria os "anéis" de brilho em volta. */
+    .sol {
+      position: absolute;
+      top: 50px;
+      right: 90px;
+      width: 90px;
+      height: 90px;
+      background: #ffd93b;
+      border-radius: 50%;
+      box-shadow: 0 0 0 12px rgba(255, 217, 59, 0.35),
+                  0 0 0 26px rgba(255, 217, 59, 0.2);
+    }
+
+    /* As nuvens: um retângulo bem arredondado (o corpo da nuvem)... */
+    .nuvem {
+      position: absolute;
+      width: 120px;
+      height: 40px;
+      background: white;
+      border-radius: 40px;
+      animation: passar-nuvem 70s linear infinite;   /* nuvem anda sozinha */
+    }
+
+    /* ...mais dois círculos por cima (::before e ::after),
+       que formam as "bolinhas" da nuvem sem precisar de HTML extra. */
+    .nuvem::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: -28px;
+      width: 55px;
+      height: 55px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .nuvem::after {
+      content: "";
+      position: absolute;
+      left: 52px;
+      top: -40px;
+      width: 70px;
+      height: 70px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    /* Cada nuvem tem altura, tamanho e velocidade diferentes.
+       animation-delay NEGATIVO faz a nuvem já começar no meio do caminho. */
+    .nuvem1 {
+      top: 100px;
+    }
+
+    .nuvem2 {
+      top: 190px;
+      transform: scale(0.7);
+      animation-duration: 95s;
+      animation-delay: -40s;
+    }
+
+    .nuvem3 {
+      top: 70px;
+      transform: scale(1.2);
+      animation-duration: 120s;
+      animation-delay: -85s;
+    }
+
+    /* @keyframes descreve o "filme" da animação: como começa e como termina.
+       Aqui a nuvem sai da esquerda (fora da tela) e vai até a direita. */
+    @keyframes passar-nuvem {
+      from { left: -200px; }
+      to   { left: 100%; }
+    }
+
+
+    /* ---------- MORROS, GRAMA, CALÇADA E ESTRADA ---------- */
+
+    /* Os morros ficam atrás das casas.
+       São elipses (círculos esticados) com borda preta. */
+    .morro {
+      position: absolute;
+      background: #a8e58f;
+      border: 4px solid black;
+      border-radius: 50%;
+    }
+
+    .morro1 {
+      left: -150px;
+      bottom: 20px;
+      width: 900px;
+      height: 320px;
+    }
+
+    .morro2 {
+      right: -150px;
+      bottom: 0;
+      width: 800px;
+      height: 330px;
+      background: #93d977;
+    }
+
+    /* A grama: uma faixa verde onde as casas ficam "em pé".
+       bottom: 176px -> a faixa começa 176px acima do fundo da tela. */
+    .gramado {
+      position: absolute;
+      left: 0;
+      bottom: 176px;
+      width: 100%;
+      height: 100px;
+      background: #8fd460;
+      border-top: 4px solid black;
+    }
+
+    /* A calçada: faixa branca com risquinhos pretos (as juntas do piso).
+       repeating-linear-gradient repete um padrão:
+       branco de 0 a 48px, preto de 48px a 51px, e assim por diante. */
+    .calcada {
+      position: absolute;
+      left: 0;
+      bottom: 150px;
+      width: 100%;
+      height: 26px;
+      background: repeating-linear-gradient(90deg, white 0 48px, black 48px 51px);
+      border-top: 4px solid black;
+      border-bottom: 4px solid black;
+    }
+
+    /* A estrada: uma faixa preta na parte de baixo da tela. */
+    .estrada {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 150px;
+      background: #1c1c1c;
+    }
+
+    /* Faixa amarela tracejada no meio da estrada.
+       O mesmo truque do gradiente repetido: 70px amarelo, 60px vazio. */
+    .faixa-central {
+      position: absolute;
+      left: 0;
+      bottom: 66px;
+      width: 100%;
+      height: 10px;
+      background: repeating-linear-gradient(90deg, #ffd21f 0 70px, transparent 70px 130px);
+    }
+
+    /* Linhas brancas contínuas nas beiradas da estrada */
+    .linha-borda {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: white;
+    }
+
+    .linha-borda-cima {
+      top: 8px;
+    }
+
+    .linha-borda-baixo {
+      bottom: 8px;
+    }
+
+
+    /* ---------- AS CASAS ---------- */
+
+    /* A "casa" é o corpo da casa: um retângulo branco com borda preta.
+       Todas as outras partes (telhado, porta, janela, chaminé) são
+       elementos colocados DENTRO dela, com position: absolute.
+       transform-origin: bottom center -> quando a casa muda de tamanho
+       (scale), ela cresce "para cima" e continua com os pés no chão. */
+    .casa {
+      position: absolute;
+      bottom: 190px;
+      width: 168px;
+      height: 128px;
+      background: white;
+      border: 4px solid black;
+      transform-origin: bottom center;
+      z-index: 1;
+    }
+
+    /* O telhado é um triângulo PRETO, feito recortando um retângulo.
+       clip-path: polygon(...) escolhe 3 pontos: topo, canto de baixo
+       à esquerda e canto de baixo à direita.
+       bottom: 100% -> o telhado fica logo em cima da casa.
+       z-index: 1 -> fica NA FRENTE da chaminé (que tem z-index 0). */
+    .telhado {
+      position: absolute;
+      bottom: 100%;
+      left: -20px;
+      width: 200px;
+      height: 70px;
+      background: black;
+      clip-path: polygon(50% 0, 0 100%, 100% 100%);
+      z-index: 1;
+    }
+
+    /* Um segundo triângulo, BRANCO e um pouco menor, por cima do preto.
+       Sobra só uma borda preta em volta: o telhado fica "desenhado". */
+    .telhado::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      clip-path: polygon(50% 9%, 10% 88.6%, 90% 88.6%);
+    }
+
+    /* A chaminé: retângulo branco com borda preta, atrás do telhado.
+       Por isso só a parte de cima aparece. */
+    .chamine {
+      position: absolute;
+      bottom: 100%;
+      right: 18px;
+      width: 24px;
+      height: 62px;
+      background: white;
+      border: 4px solid black;
+      z-index: 0;
+    }
+
+    /* Esta classe extra muda a chaminé para o lado esquerdo do telhado.
+       Usamos junto com .chamine:  class="chamine chamine-esquerda" */
+    .chamine-esquerda {
+      right: auto;
+      left: 18px;
+    }
+
+    /* A fumaça: duas bolinhas (::before e ::after) que sobem e somem.
+       A segunda começa 1,5 segundo depois, para não saírem juntas. */
+    .chamine::before,
+    .chamine::after {
+      content: "";
+      position: absolute;
+      left: 1px;
+      bottom: 100%;
+      margin-bottom: 6px;
+      width: 14px;
+      height: 14px;
+      background: white;
+      border: 3px solid black;
+      border-radius: 50%;
+      opacity: 0;
+      animation: subir-fumaca 3s ease-out infinite;
+    }
+
+    .chamine::after {
+      animation-delay: 1.5s;
+    }
+
+    /* A fumaça começa pequena e visível, e termina grande, mais alta e invisível */
+    @keyframes subir-fumaca {
+      0%   { opacity: 0.9; transform: translate(0, 0) scale(0.6); }
+      100% { opacity: 0;   transform: translate(14px, -70px) scale(1.6); }
+    }
+
+    /* A porta: retângulo branco com borda preta (sem borda embaixo,
+       porque ela "encosta" no chão) e cantinhos de cima arredondados.
+       left: 50% + margin-left negativo = centralizar a porta. */
+    .porta {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      margin-left: -20px;
+      width: 40px;
+      height: 66px;
+      background: white;
+      border: 4px solid black;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+    }
+
+    /* A maçaneta: uma bolinha preta bem pequena dentro da porta */
+    .porta::after {
+      content: "";
+      position: absolute;
+      right: 5px;
+      top: 30px;
+      width: 6px;
+      height: 6px;
+      background: black;
+      border-radius: 50%;
+    }
+
+    /* A janela: quadrado branco com borda preta */
+    .janela {
+      position: absolute;
+      top: 22px;
+      width: 36px;
+      height: 36px;
+      background: white;
+      border: 4px solid black;
+    }
+
+    /* A cruz da janela: uma linha vertical (::before)
+       e uma linha horizontal (::after), as duas pretas. */
+    .janela::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      margin-left: -2px;
+      background: black;
+    }
+
+    .janela::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 4px;
+      margin-top: -2px;
+      background: black;
+    }
+
+    /* Uma janela fica na esquerda da porta, a outra na direita */
+    .janela-esquerda {
+      left: 16px;
+    }
+
+    .janela-direita {
+      right: 16px;
+    }
+
+
+    /* ---------- O BONECO PALITO ---------- */
+
+    /* O "boneco" é a caixa que guarda o desenho inteiro.
+       O JavaScript vai mudar o "left" dela para o boneco andar.
+       Começa em left: -60px, ou seja, escondido fora da tela. */
+    .boneco {
+      position: absolute;
+      left: -60px;
+      bottom: 22px;
+      width: 60px;
+      height: 120px;
+      z-index: 5;
+    }
+
+    /* Dentro do boneco existe outra caixa, "boneco-corpo".
+       Ela faz o boneco quicar para cima e para baixo enquanto anda. */
+    .boneco-corpo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      animation: quicar 0.3s ease-in-out infinite alternate;
+    }
+
+    /* Todas as partes do boneco: fundo branco e borda preta,
+       igual ao estilo das casas. */
+    .cabeca,
+    .tronco,
+    .braco,
+    .perna {
+      position: absolute;
+      background: white;
+      border: 2px solid black;
+    }
+
+    /* A cabeça: um círculo. Também balança de leve, como quem anda. */
+    .cabeca {
+      left: 17px;
+      top: 0;
+      width: 26px;
+      height: 26px;
+      border-width: 3px;
+      border-radius: 50%;
+      z-index: 3;
+      animation: balancar-cabeca 0.6s ease-in-out infinite alternate;
+    }
+
+    /* O olho: uma bolinha preta do lado direito da cabeça
+       (o boneco está olhando para a direita). */
+    .cabeca::after {
+      content: "";
+      position: absolute;
+      right: 3px;
+      top: 6px;
+      width: 4px;
+      height: 4px;
+      background: black;
+      border-radius: 50%;
+    }
+
+    /* O tronco: uma barrinha em pé, no meio do boneco */
+    .tronco {
+      left: 26px;
+      top: 26px;
+      width: 8px;
+      height: 46px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    /* Os braços saem do "ombro" (perto do topo do tronco).
+       transform-origin diz onde fica a "dobradiça" da rotação:
+       50% 4px = no meio da largura, 4px abaixo do topo. */
+    .braco {
+      left: 26px;
+      top: 30px;
+      width: 8px;
+      height: 38px;
+      border-radius: 4px;
+      transform-origin: 50% 4px;
+    }
+
+    /* As pernas saem da "cintura" (parte de baixo do tronco) */
+    .perna {
+      left: 26px;
+      top: 68px;
+      width: 8px;
+      height: 50px;
+      border-radius: 4px;
+      transform-origin: 50% 4px;
+    }
+
+    /* O pezinho: um retângulo pequeno na ponta da perna, virado para a direita */
+    .perna::after {
+      content: "";
+      position: absolute;
+      left: -2px;
+      bottom: -2px;
+      width: 16px;
+      height: 7px;
+      background: white;
+      border: 2px solid black;
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* Braço e perna "de trás" ficam cinzas e atrás do tronco,
+       para dar a sensação de profundidade. */
+    .braco-tras,
+    .perna-tras {
+      background: #cfcfcf;
+      z-index: 1;
+    }
+
+    .braco-frente,
+    .perna-frente {
+      z-index: 4;
+    }
+
+    /* Aqui juntamos as animações com as partes do corpo.
+       - "0.6s" é o tempo de meio passo (mude para andar mais rápido ou devagar)
+       - "infinite" repete para sempre
+       - "alternate" vai e volta (frente, trás, frente, trás...)
+       - "alternate-reverse" faz o CONTRÁRIO: quando uma perna vai para frente,
+         a outra vai para trás. Braços fazem o oposto das pernas do mesmo lado. */
+    .perna-frente {
+      animation: balancar-perna 0.6s ease-in-out infinite alternate;
+    }
+
+    .perna-tras {
+      animation: balancar-perna 0.6s ease-in-out infinite alternate-reverse;
+    }
+
+    .braco-frente {
+      animation: balancar-braco 0.6s ease-in-out infinite alternate-reverse;
+    }
+
+    .braco-tras {
+      animation: balancar-braco 0.6s ease-in-out infinite alternate;
+    }
+
+    /* Perna: gira de -32 graus até +32 graus */
+    @keyframes balancar-perna {
+      from { transform: rotate(-32deg); }
+      to   { transform: rotate(32deg); }
+    }
+
+    /* Braço: gira um pouco menos que a perna (28 graus) */
+    @keyframes balancar-braco {
+      from { transform: rotate(-28deg); }
+      to   { transform: rotate(28deg); }
+    }
+
+    /* Quicar: o corpo sobe 6px e desce. Como o passo dura 0,6s,
+       usamos 0,3s para subir e 0,3s para descer, no mesmo ritmo das pernas. */
+    @keyframes quicar {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-6px); }
+    }
+
+    /* Cabeça: inclina 3 graus para cada lado, bem de leve */
+    @keyframes balancar-cabeca {
+      from { transform: rotate(-3deg); }
+      to   { transform: rotate(3deg); }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ==========================================================
+       PARTE 1: HTML (os objetos da cena)
+       Cada <div> é uma "caixinha". O CSS lá de cima dá cor, tamanho
+       e posição para cada caixinha, usando o nome que está em class.
+       A ORDEM importa: o que vem depois aparece na frente.
+       ========================================================== -->
+
+  <!-- O cenário guarda todas as outras caixas -->
+  <div class="cenario">
+
+    <!-- Título da página (pode trocar o texto!) -->
+    <h1 class="titulo">Cidade do Boneco Palito</h1>
+
+    <!-- CÉU: fundo azul com sol e nuvens -->
+    <div class="ceu">
+      <div class="sol"></div>
+      <div class="nuvem nuvem1"></div>
+      <div class="nuvem nuvem2"></div>
+      <div class="nuvem nuvem3"></div>
+    </div>
+
+    <!-- MORROS ao fundo -->
+    <div class="morro morro1"></div>
+    <div class="morro morro2"></div>
+
+    <!-- GRAMA onde as casas ficam em pé -->
+    <div class="gramado"></div>
+
+
+    <!-- ======================================================
+         AS CASAS
+         Cada casa tem: telhado, (chaminé), janelas e porta.
+         No atributo style de cada casa mudamos:
+           left      -> posição na horizontal (em % da largura da tela)
+           transform: scale(...) -> tamanho (1 = normal, 1.2 = 20% maior)
+         ====================================================== -->
+
+    <!-- CASA 1: tamanho normal, chaminé na direita, duas janelas -->
+    <div class="casa" style="left: 3%; transform: scale(1);">
+      <div class="chamine"></div>          <!-- chaminé (solta fumaça sozinha) -->
+      <div class="telhado"></div>          <!-- telhado triangular -->
+      <div class="janela janela-esquerda"></div>
+      <div class="janela janela-direita"></div>
+      <div class="porta"></div>
+    </div>
+
+    <!-- CASA 2: 20% maior, chaminé na esquerda -->
+    <div class="casa" style="left: 22%; transform: scale(1.2);">
+      <div class="chamine chamine-esquerda"></div>
+      <div class="telhado"></div>
+      <div class="janela janela-esquerda"></div>
+      <div class="janela janela-direita"></div>
+      <div class="porta"></div>
+    </div>
+
+    <!-- CASA 3: um pouco menor, sem chaminé, só uma janela -->
+    <div class="casa" style="left: 42%; transform: scale(0.9);">
+      <div class="telhado"></div>
+      <div class="janela janela-esquerda"></div>
+      <div class="porta"></div>
+    </div>
+
+    <!-- CASA 4: um pouco maior, chaminé na direita, só uma janela -->
+    <div class="casa" style="left: 60%; transform: scale(1.1);">
+      <div class="chamine"></div>
+      <div class="telhado"></div>
+      <div class="janela janela-direita"></div>
+      <div class="porta"></div>
+    </div>
+
+    <!-- CASA 5: quase normal, chaminé na esquerda, duas janelas -->
+    <div class="casa" style="left: 80%; transform: scale(0.95);">
+      <div class="chamine chamine-esquerda"></div>
+      <div class="telhado"></div>
+      <div class="janela janela-esquerda"></div>
+      <div class="janela janela-direita"></div>
+      <div class="porta"></div>
+    </div>
+
+
+    <!-- CALÇADA entre a grama e a estrada -->
+    <div class="calcada"></div>
+
+    <!-- ESTRADA: asfalto preto com faixas -->
+    <div class="estrada">
+      <div class="linha-borda linha-borda-cima"></div>   <!-- linha branca de cima -->
+      <div class="faixa-central"></div>                  <!-- faixa amarela tracejada -->
+      <div class="linha-borda linha-borda-baixo"></div>  <!-- linha branca de baixo -->
+    </div>
+
+
+    <!-- ======================================================
+         O BONECO PALITO
+         id="boneco" é o "nome único" que o JavaScript usa para
+         encontrar esta caixa e movê-la pela tela.
+         Dentro dele: cabeça, tronco, 2 braços e 2 pernas.
+         "frente" e "tras" indicam qual lado fica na frente do corpo.
+         ====================================================== -->
+    <div class="boneco" id="boneco">
+      <div class="boneco-corpo">
+        <div class="braco braco-tras"></div>     <!-- braço de trás (cinza) -->
+        <div class="perna perna-tras"></div>     <!-- perna de trás (cinza) -->
+        <div class="tronco"></div>               <!-- corpo -->
+        <div class="cabeca"></div>               <!-- cabeça com olho -->
+        <div class="perna perna-frente"></div>   <!-- perna da frente (branca) -->
+        <div class="braco braco-frente"></div>   <!-- braço da frente (branco) -->
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================
+       PARTE 3: JAVASCRIPT (o movimento do boneco)
+       O CSS já faz braços e pernas balançarem.
+       O JavaScript cuida de fazer o boneco ANDAR pela tela.
+       ========================================================== -->
+  <script>
+
+    // ----- VARIÁVEIS (guardam informações que podemos mudar) -----
+
+    // Procura no HTML a caixa que tem id="boneco" e guarda em uma variável.
+    // "const" = valor que não vai ser trocado por outro objeto.
+    const boneco = document.getElementById("boneco");
+
+    // Quantos pixels o boneco anda a cada "tique" (a cada 20 milissegundos).
+    // Número maior = boneco mais rápido!
+    let velocidade = 3;
+
+    // Direção: 1 = anda para a direita, -1 = anda para a esquerda.
+    let direcao = 1;
+
+    // Largura do desenho do boneco (o mesmo valor do width no CSS).
+    const larguraDoBoneco = 60;
+
+    // Posição atual do boneco na horizontal, em pixels.
+    // Começa com um número negativo: o boneco entra "de fora" da tela.
+    // "let" = valor que vai mudar durante o programa.
+    let posicaoX = -larguraDoBoneco;
+
+
+    // ----- FUNÇÃO andar() -----
+    // Uma função é um bloco de instruções com nome.
+    // Esta aqui será repetida várias vezes por segundo.
+    function andar() {
+
+      // 1) Soma a velocidade (com a direção) na posição.
+      //    Se direcao = 1, a posição aumenta e o boneco vai para a direita.
+      //    Se direcao = -1, a posição diminui e o boneco vai para a esquerda.
+      posicaoX = posicaoX + velocidade * direcao;
+
+      // 2) Descobre a largura da janela do navegador, em pixels.
+      const larguraDaTela = window.innerWidth;
+
+      // 3) LOOP INFINITO: se o boneco saiu pela direita da tela,
+      //    ele reaparece do lado esquerdo (fora da tela).
+      if (direcao === 1 && posicaoX > larguraDaTela) {
+        posicaoX = -larguraDoBoneco;
+      }
+
+      // 4) O mesmo, mas quando anda para a esquerda:
+      //    saiu pela esquerda, reaparece na direita.
+      if (direcao === -1 && posicaoX < -larguraDoBoneco) {
+        posicaoX = larguraDaTela;
+      }
+
+      // 5) Coloca o boneco na nova posição (muda o "left" do CSS).
+      boneco.style.left = posicaoX + "px";
+
+      // 6) Se anda para a esquerda, vira o desenho de lado (espelha).
+      //    scaleX(-1) espelha na horizontal; scaleX(1) deixa normal.
+      if (direcao === 1) {
+        boneco.style.transform = "scaleX(1)";
+      } else {
+        boneco.style.transform = "scaleX(-1)";
+      }
+    }
+
+
+    // ----- FAZENDO A FUNÇÃO RODAR SOZINHA -----
+    // setInterval chama a função andar() de tempos em tempos.
+    // 20 = a cada 20 milissegundos (50 vezes por segundo).
+    // Isso cria o efeito de movimento contínuo, como os quadros de um filme.
+    setInterval(andar, 20);
+
+  </script>
+
+</body>
+
+</html>
+
+<!--
+  ============================================================
+  IDEIAS PARA OS ALUNOS MODIFICAREM
+  ============================================================
+  Cada desafio tem uma dica de onde mexer. Tentem primeiro
+  sem olhar a dica! Se der erro, desfaçam a última mudança
+  (Ctrl + Z) e tentem de novo. Errar faz parte de programar.
+
+  1) MUDAR A COR DO CÉU
+     Procure a classe .ceu no CSS e troque as cores do
+     linear-gradient. Dica: tente #ff9a5a, #ffd1a0 e #ffe9cf
+     para um pôr do sol. Ou use uma cor só: background: navy;
+
+  2) ADICIONAR MAIS CASAS
+     Copie uma casa inteira do HTML (da linha <div class="casa"...>
+     até o </div> dela) e cole logo abaixo. Depois mude o left
+     (ex.: left: 92%;). Dica: cada casa nova precisa de um left
+     diferente, senão ela fica em cima de outra.
+
+  3) ALTERAR O TAMANHO DAS CASAS
+     No style de uma casa, mude o número do scale.
+     scale(0.6) deixa a casa pequena, scale(1.5) deixa grande.
+
+  4) MUDAR A VELOCIDADE DO BONECO
+     No JavaScript, mude let velocidade = 3; para 1 (devagar)
+     ou 8 (correndo!). Para as pernas acompanharem, diminua ou
+     aumente o 0.6s das animações .perna-frente, .perna-tras,
+     .braco-frente e .braco-tras. Menos segundos = passos mais rápidos.
+
+  5) FAZER O BONECO ANDAR NA DIREÇÃO CONTRÁRIA
+     No JavaScript, mude let direcao = 1; para let direcao = -1;
+     O código já espelha o desenho e faz o loop para o outro lado.
+
+  6) ADICIONAR ÁRVORES
+     Crie uma classe .arvore no CSS: um tronco (retângulo marrom
+     com borda preta) e uma copa (círculo verde com borda preta,
+     border-radius: 50%). Use position: absolute; bottom: 190px;
+     e um left diferente. No HTML, coloque a árvore ANTES ou
+     DEPOIS de uma casa para ela ficar atrás ou na frente.
+
+  7) ADICIONAR CARROS
+     Crie uma classe .carro (retângulo branco com borda preta,
+     duas rodas redondas pretas dentro dele). Coloque na estrada
+     com position: absolute; bottom: 90px; e anime com @keyframes
+     igual às nuvens (from { left: -200px; } to { left: 100%; }).
+     Dica: coloque o <div class="carro"> DENTRO do <div class="estrada">.
+
+  8) FAZER O BONECO PARAR QUANDO UMA TECLA FOR PRESSIONADA
+     No JavaScript, crie uma variável: let andando = true;
+     Depois um "ouvinte" de teclado:
+       document.addEventListener("keydown", function () {
+         andando = !andando;   // troca entre true e false
+       });
+     No começo da função andar(), coloque:
+       if (andando === false) { return; }
+     (return faz a função parar ali, sem mover o boneco).
+     Para pausar também as pernas, adicione no CSS:
+       .boneco.parado * { animation-play-state: paused; }
+     e no JavaScript: boneco.classList.toggle("parado");
+
+  9) ALTERAR A APARÊNCIA DO BONECO
+     No CSS, mude o background dos elementos .cabeca, .tronco,
+     .braco e .perna (ex.: orange, pink). Também dá para mudar o
+     tamanho da cabeça (width e height) e adicionar um chapéu:
+     crie um novo <div class="chapeu"></div> dentro do boneco-corpo.
+
+  10) ADICIONAR UM BOTÃO PARA INICIAR E PARAR A ANIMAÇÃO
+     No HTML, crie: <button id="botao">Parar</button>
+     No JavaScript, use o mesmo truque do desafio 8, mas com um clique:
+       document.getElementById("botao").addEventListener("click", function () {
+         andando = !andando;
+       });
+     Dica: estilize o botão no CSS com position: absolute; top: 20px;
+     right: 20px; z-index: 10; para ele aparecer sobre a cena.
+
+  DESAFIOS EXTRAS
+  - Fazer o boneco trocar de direção quando tocar na borda da tela.
+  - Fazer a fumaça das chaminés ficar cinza.
+  - Criar uma casa com dois andares.
+  - Fazer o sol se mover pelo céu com @keyframes.
+  ============================================================
+-->
